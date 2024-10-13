@@ -10,7 +10,7 @@ export const getAuth = async (email: string, password: string) => {
     if(data?.length === 0) {
         throw new Error("Invalid username or password");
     }
-    return data;
+    return data?.[0];
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : String(error));
   }

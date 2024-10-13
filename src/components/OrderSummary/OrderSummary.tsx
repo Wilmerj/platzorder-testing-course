@@ -18,7 +18,7 @@ export const OrderSummary: React.FC<{ orders: Order[] }> = ({ orders }) => {
 
   return (
     <div className={styles.OrdersSummary}>
-      <h3 className={styles.OrdersSummary__title}>Orders Summary</h3>
+      <h3 className={styles.OrdersSummary__title}>Orders Summary (Only admins)</h3>
       <div className={styles.OrdersSummary__grid}>
         <div className={styles.OrdersSummary__item}>
           <p className={styles.OrdersSummary__label}>Total Orders</p>

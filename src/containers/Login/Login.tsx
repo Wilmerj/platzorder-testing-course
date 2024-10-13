@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "../../services/getAuth";
+import { useSession } from '../../context/AuthContext';
 import classes from "./Login.module.scss";
 
 interface LoginFormData {
@@ -8,14 +9,22 @@ interface LoginFormData {
   password: string;
 }
 
+const mockSuperAdmin = {
+  username: "superadmin@example.com",
+  password: "superadmin123!",
+}
+
+const mockVisualuizer = {
+  username: "visualizer1@example.com",
+  password: "vis1pass456@",
+}
+
 export const Login: React.FC = () => {
-  const [formData, setFormData] = useState<LoginFormData>({
-    username: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState<LoginFormData>(mockSuperAdmin);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { login } = useSession();
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +45,7 @@ export const Login: React.FC = () => {
     try {
       const { username, password } = formData;
       const response = await getAuth(username, password);
-      console.info(response);
+      login(response);
       navigate("/orders");
     } catch (error) {
       setErrorMessage(error instanceof Error ? error.message : String(error));
