@@ -45,7 +45,7 @@ const mockOrders = [
 const renderOrders = (userRole: string | null) => {
   const mockUser = userRole ? { role: userRole } : null;
   (useSession as jest.Mock).mockReturnValue({ user: mockUser });
-  
+
   return render(
     <SessionProvider>
       <MemoryRouter>
