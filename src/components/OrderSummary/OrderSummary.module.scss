@@ -1,9 +1,11 @@
 .OrdersSummary {
   $primary-color-light: #e6f4f9;
+  $card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: $primary-color-light;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
+  box-shadow: $card-shadow;
 
   &__title {
     font-size: 20px;

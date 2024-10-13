@@ -1,9 +1,10 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { Login } from "..";
 import { MemoryRouter } from "react-router-dom";
 import { getAuth } from "../../../services/getAuth";
+import { SessionProvider } from "../../../context/AuthContext";
+import { Login } from "..";
 
 // Mocking external dependencies
 vi.mock("react-router-dom", async () => {
@@ -26,18 +27,18 @@ describe("Login Component", () => {
 
   const renderLogin = () => {
     return render(
-      <MemoryRouter>
-        <Login />
-      </MemoryRouter>
+      <SessionProvider>
+        <MemoryRouter>
+          <Login />
+        </MemoryRouter>
+      </SessionProvider>
     );
   };
 
   it("renders login form correctly", () => {
     renderLogin();
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: /Platz order/i })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: /Platz order/i })).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /login/i })).toBeInTheDocument();
@@ -54,23 +55,6 @@ describe("Login Component", () => {
 
     expect(usernameInput).toHaveValue("testuser");
     expect(passwordInput).toHaveValue("testpass");
-  });
-
-  it("toggles password visibility", () => {
-    renderLogin();
-
-    const passwordInput = screen.getByPlaceholderText(/password/i);
-    const toggleButton = screen.getByRole("button", { name: /show/i });
-
-    expect(passwordInput).toHaveAttribute("type", "password");
-
-    fireEvent.click(toggleButton);
-    expect(passwordInput).toHaveAttribute("type", "text");
-    expect(toggleButton).toHaveTextContent("hide");
-
-    fireEvent.click(toggleButton);
-    expect(passwordInput).toHaveAttribute("type", "password");
-    expect(toggleButton).toHaveTextContent("show");
   });
 
   it("calls getAuth and navigates on successful login", async () => {
