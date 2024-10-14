@@ -1,10 +1,10 @@
-const host = "http://localhost:3000";
+import { API_URL } from './contants';
 const path = "/auth/";
 
 export const getAuth = async (email: string, password: string) => {
   try {
     const response = await fetch(
-      `${host}${path}?email=${email}&password=${password}`
+      `${API_URL}${path}?email=${email}&password=${password}`
     );
     const data = await response.json();
     if(data?.length === 0) {

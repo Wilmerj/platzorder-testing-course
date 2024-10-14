@@ -1,9 +1,9 @@
-const host = "http://localhost:3000";
+import { API_URL } from "./contants";
 const path = "/orders/";
 
 export const getOrders = async () => {
   try {
-    const response = await fetch(`${host}${path}`);
+    const response = await fetch(`${API_URL}${path}`);
     const data = await response.json();
     return data;
   } catch (error) {
